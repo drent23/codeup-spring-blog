@@ -9,7 +9,7 @@
 <div th:insert="partials/header :: header"></div>
 <div class="container">
 <h2>Create Your Post:</h2>
-  <form method="POST" action="posts/create">
+  <form method="POST" th:action="@{/posts/create}">
     <label for="title">Title:</label>
     <input id="title" name="title" type="text">
     <br><br>

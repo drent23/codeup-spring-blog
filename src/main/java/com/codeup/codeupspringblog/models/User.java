@@ -1,4 +1,4 @@
-package com.codeup.azebancodeupspringblog.model;
+package com.codeup.codeupspringblog.models;
 import jakarta.persistence.*;
 @Entity
 public class User {
