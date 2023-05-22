@@ -6,12 +6,10 @@ import com.codeup.codeupspringblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 @Controller
 public class PostController {
     private final PostRepository postDao;
     private final UserRepository userRepository;
-
     public PostController(PostRepository postDao, UserRepository userRepository) {
         this.postDao = postDao;
         this.userRepository = userRepository;
@@ -30,7 +28,7 @@ public class PostController {
     }
     @GetMapping("/posts/{id}")
     public String singlePost(@PathVariable long id, Model model) {
-        model.addAttribute("post", postDao.findById(id));
+        model.addAttribute("post", postDao.findById(id).get());
         return "posts/show";
     }
     @GetMapping("/posts/create")

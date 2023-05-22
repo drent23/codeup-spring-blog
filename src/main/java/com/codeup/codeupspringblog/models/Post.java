@@ -36,4 +36,5 @@ public class Post {
     public Long getId() {
         return id;
     }
+    public User getUser(){ return user;}
 }

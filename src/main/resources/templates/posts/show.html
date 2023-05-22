@@ -10,6 +10,7 @@
 <h2>Post Details:</h2>
     <p><strong>Title:</strong><span th:text="${post.title}"></span></p>
     <p><strong>Body:</strong><span th:text="${post.body}"></span></p>
+    <p>Created by: <span th:text="${post.getUser().getEmail()}"></span></p>
 <div th:insert="partials/footer :: footer"></div>
 </body>
 </html>
