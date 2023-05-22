@@ -1,17 +1,28 @@
 package com.codeup.codeupspringblog.controllers;
 import com.codeup.codeupspringblog.models.Post;
+import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.PostRepository;
+import com.codeup.codeupspringblog.repositories.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
+
 @Controller
 public class PostController {
     private final PostRepository postDao;
-    public PostController(PostRepository postDao) {
+    private final UserRepository userRepository;
+
+    public PostController(PostRepository postDao, UserRepository userRepository) {
         this.postDao = postDao;
+        this.userRepository = userRepository;
     }
+
+    //    public PostController(PostRepository postDao) {
+//        this.postDao = postDao;
+//    }
+//    public PostController(UserRepository userRepository) {
+//        this.userRepository = userRepository);
+//    }
     @GetMapping("/posts")
     public String index(Model model) {
         model.addAttribute("posts", postDao.findAll());
@@ -28,6 +39,7 @@ public class PostController {
     }
     @PostMapping("/posts/create")
     public String createPost(@RequestParam String title,@RequestParam String body) {
+        User user = userRepository.findAll().get(0);
         Post userPost = new Post();
         userPost.setTitle(title);
         userPost.setBody(body);

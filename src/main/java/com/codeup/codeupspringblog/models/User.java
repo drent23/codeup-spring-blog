@@ -1,10 +1,13 @@
 package com.codeup.codeupspringblog.models;
 import jakarta.persistence.*;
+
+import java.util.List;
+
 @Entity
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long id;
     @Column(nullable = false, length = 25)
     private String username;
@@ -12,6 +15,8 @@ public class User {
     private String password;
     @Column(nullable = false, length = 25)
     private String email;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<Post> posts;
     public User() {}
     public String getUsername() {
         return username;
