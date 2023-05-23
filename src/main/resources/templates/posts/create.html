@@ -9,12 +9,12 @@
 <div th:insert="partials/header :: header"></div>
 <div class="container">
 <h2>Create Your Post:</h2>
-  <form method="POST" th:action="@{/posts/create}">
+  <form method="POST" th:action="@{/posts/create}" th:object="${post}">
     <label for="title">Title:</label>
-    <input id="title" name="title" type="text">
+    <input id="title" th:field="*{title}">
     <br><br>
     <label for="body">Body:</label>
-    <textarea id="body" name="body"></textarea>
+    <textarea id="body" th:field="*{body}"></textarea>
     <br><br>
     <button type="submit">Submit your post</button>
   </form>

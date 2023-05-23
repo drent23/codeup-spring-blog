@@ -14,12 +14,16 @@
             <tr>
                 <th>Title</th>
                 <th>Body</th>
+                <th>Creator</th>
+                <th>Request Email</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="post : ${posts}">
+            <tr th:each="post : ${posts}" style="border: 5px solid royalblue">
                 <td th:text="${post.title}"></td>
                 <td th:text="${post.body}"></td>
+                <td th:text="${post.getUser().getUsername()}"></td>
+                <td><a th:href="@{/posts/email/{id}(id=${post.getId()})}">Email about post</a></td>
             </tr>
         </tbody>
     </table>

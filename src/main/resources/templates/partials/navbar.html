@@ -3,4 +3,12 @@
   <a th:href="@{/posts}">Posts</a>
   <a th:href="@{/login}">Login</a>
   <a th:href="@{/register}">Create an Account</a>
+  <ul>
+    <!-- More links here... -->
+    <li>
+      <form th:action="@{/logout}" th:method="post">
+        <button class="btn-link btn" style="margin-top: 8px">Logout</button>
+      </form>
+    </li>
+  </ul>
 </nav>

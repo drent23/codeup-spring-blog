@@ -1,5 +1,8 @@
 package com.codeup.codeupspringblog.models;
 import jakarta.persistence.*;
+
+import java.util.Optional;
+
 @Entity
 @Table(name = "post")
 public class Post {
@@ -37,4 +40,8 @@ public class Post {
         return id;
     }
     public User getUser(){ return user;}
+    public void setUser(User user) { this.user = user;
+    }
+    public void setUser(Optional<User> byId) {
+    }
 }

@@ -3,6 +3,8 @@ import com.codeup.codeupspringblog.models.Post;
 import com.codeup.codeupspringblog.models.User;
 import com.codeup.codeupspringblog.repositories.PostRepository;
 import com.codeup.codeupspringblog.repositories.UserRepository;
+import com.codeup.codeupspringblog.services.EmailService;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,17 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     private final PostRepository postDao;
     private final UserRepository userRepository;
-    public PostController(PostRepository postDao, UserRepository userRepository) {
+    private final EmailService emailService;
+    public PostController(PostRepository postDao, UserRepository userRepository, EmailService emailService) {
         this.postDao = postDao;
         this.userRepository = userRepository;
+        this.emailService = emailService;
     }
-
-    //    public PostController(PostRepository postDao) {
-//        this.postDao = postDao;
-//    }
-//    public PostController(UserRepository userRepository) {
-//        this.userRepository = userRepository);
-//    }
     @GetMapping("/posts")
     public String index(Model model) {
         model.addAttribute("posts", postDao.findAll());
@@ -32,33 +29,26 @@ public class PostController {
         return "posts/show";
     }
     @GetMapping("/posts/create")
-    public String createForm() {
+    public String createForm(Model model) {
+        model.addAttribute("post", new Post());
         return "posts/create";
     }
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam String title,@RequestParam String body) {
-        User user = userRepository.findAll().get(0);
-        Post userPost = new Post();
-        userPost.setTitle(title);
-        userPost.setBody(body);
-        postDao.save(userPost);
+    public String createPost(@ModelAttribute Post post) {
+        post.setUser(userRepository.findById(1L));
+        postDao.save(post);
+        return "redirect:/posts";
+    }
+    @GetMapping("/posts/{id}/edit")
+    public String editPost(@PathVariable long id, Model model) {
+        Post post = postDao.getReferenceById(id);
+        model.addAttribute("post", post);
+        return "posts/edit";
+    }
+    @GetMapping("/posts/email/{id}")
+    public String sendEmailAboutPost(@PathVariable long id) {
+        Post post = postDao.getReferenceById(id);
+        emailService.prepareAndSend(post, "Here's the post you requested", post.getTitle() + " : " + post.getBody() + " ~ creator: " + post.getUser().getUsername());
         return "redirect:/posts";
     }
 }
-//    List<Post> posts = new ArrayList<>();
-//    Post firstPost = new Post();
-//        firstPost.setTitle("Sad Sack");
-//                firstPost.setBody("I have 100 friends on FB, none in real life.");
-//                Post secondPost = new Post();
-//                secondPost.setTitle("The One and Lonely");
-//                secondPost.setBody("At least they have 100 friends on FB");
-//                posts.add(firstPost);
-//                posts.add(secondPost);
-//@PostMapping("/posts/{id}")
-//public String getPost(Model model) {
-//    Post post = new Post();
-//    post.setTitle("Sad Sack");
-//    post.setBody("I have 100 friends on FB, none in real life.");
-//    model.addAttribute("post", post);
-//    return "posts/show";
-//}
