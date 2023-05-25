@@ -1,8 +1,17 @@
-<nav th:fragment="navbar" style="width: border-box; color: aliceblue; background-color:royalblue; display: inline-block; justify-content: space-evenly">
+<nav th:fragment="navbar"
+     style="width: border-box; color: aliceblue; background-color:royalblue; display: inline-block; justify-content: space-evenly"
+     xmlns:sec="http://www.w3.org/1999/xhtml">
   <a th:href="@{/}">Home</a>
   <a th:href="@{/posts}">Posts</a>
   <a th:href="@{/login}">Login</a>
   <a th:href="@{/register}">Create an Account</a>
+  <div sec:authorize="isAuthenticated()">
+    This content is only shown to authenticated users.
+
+    User ID: <span th:text="${#authentication.principal.id}"/>
+    Username: <span th:text="${#authentication.principal.username}"/>
+    Email: <span th:text="${#authentication.principal.email}"/>
+  </div>
   <ul>
     <!-- More links here... -->
     <li>

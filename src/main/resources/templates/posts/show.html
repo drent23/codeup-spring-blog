@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
 <head>
     <meta charset="UTF-8">
     <title>Show Post</title>
@@ -12,5 +13,9 @@
     <p><strong>Body:</strong><span th:text="${post.body}"></span></p>
     <p>Created by: <span th:text="${post.getUser().getEmail()}"></span></p>
 <div th:insert="partials/footer :: footer"></div>
+
+<!--<h4 th:text="${adForView.getTitle()}">-->
+<!--</h4>-->
+<!--<p th:text="${adForView.getDescription()}"></p>-->
 </body>
 </html>

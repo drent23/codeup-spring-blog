@@ -10,12 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 @Controller
 public class PostController {
+    //hypothetical get methods below here
+    //a post method etc.
+    //they NEED to access the Ad table to work tho! My get method needs to [R]ead the ads and my post method needs to [C]reate the ads!
+    //To do the above.. I need a data - access - object
     private final PostRepository postDao;
-    private final UserRepository userRepository;
+    private final UserRepository userDao;
     private final EmailService emailService;
-    public PostController(PostRepository postDao, UserRepository userRepository, EmailService emailService) {
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
-        this.userRepository = userRepository;
+        this.userDao = userDao;
         this.emailService = emailService;
     }
     @GetMapping("/posts")
@@ -35,7 +39,7 @@ public class PostController {
     }
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post) {
-        post.setUser(userRepository.findById(1L));
+        post.setUser(userDao.findById(1L));
         postDao.save(post);
         return "redirect:/posts";
     }

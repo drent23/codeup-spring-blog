@@ -1,8 +1,6 @@
 package com.codeup.codeupspringblog.models;
 import jakarta.persistence.*;
-
 import java.util.List;
-
 @Entity
 @Table(name = "user")
 public class User {
@@ -18,12 +16,26 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Post> posts;
     public User() {}
-    //for Spring security
+    //Copy constructor: for Spring security
     public User(User copy) {
         id = copy.id; // This line is SUPER important! Many things won't work if it's absent
         email = copy.email;
         username = copy.username;
         password = copy.password;
+    }
+    public User(Long id, String username, String password, String email, List<Post> post) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.post = post;
+    }
+
+    public User(String username, String password, String email, List<Post> post) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.post = post;
     }
     public String getUsername() {
         return username;
@@ -48,5 +60,11 @@ public class User {
     }
     public void setId(Long id) {
         this.id = id;
+    }
+    public List<Post> getPost() {
+        return post;
+    }
+    public void setPost(List<Post> post) {
+        this.post = post;
     }
 }

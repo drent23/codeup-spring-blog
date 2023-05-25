@@ -46,9 +46,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/posts/create", // only authenticated users can create ads
-                        "/posts/{id}/edit" // only authenticated users can edit ads
-                )
-                .authenticated();
+                        "/posts/{id}/edit") // only authenticated users can edit ads)
+                .authenticated()
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/js/**", "/css/**")
+                .permitAll();
         return http.build();
     }
 }
